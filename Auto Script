@@ -1,0 +1,117 @@
+# Automatic Account Generator
+
+import pandas as pd
+from pandas import Series,DataFrame
+import numpy as np
+import random
+from tkinter import *
+import tkinter as tk
+
+fnamelst = []
+lnamelst = []
+usern = []
+passw = []
+up = {}
+
+
+while True:
+    try:
+        prompt = print('Automatic Username and Password Generator','''
+    ''','1) Enter Multiple Names for Employees','''
+    ''','2) Enter Single Name for Employees','''
+    ''','3) Create Username for each Employee','''
+    ''','4) Create Password for each Employee','''
+    ''','5) View Usernames with Passwords','''
+    ''','6) Delete Record','''
+    ''','7) Export File','''
+    ''','8) Quit menu, i.e., Quit')
+        promptinput = int(input('Enter command here: '))
+        print('')
+        if promptinput ==1:
+            while True:
+                try:
+                    p1 = int(input('Enter how many employees will be getting a username and password: '))
+                    if p1 ==0 or p1 > 100:
+                        print('Invalid response... Please enter a number 1-100')
+                    if p1 > 0 and p1 < 101:
+                        pnum = p1
+                        for i in range(1,pnum + 1):
+                            fname = input('Enter the first name of employee ' + str(i) + ': ')
+                            print('')
+                            lname = input('Enter the last name of employee ' + str(i) + ': ')
+                            fnamelst.append(fname)
+                            lnamelst.append(lname)
+                            print('')
+                        print('')
+                        print('Employee Names successfully recorded')
+                        print('')
+                        break
+                except ValueError:
+                    print('Invalid response... Please enter an integer')
+        if promptinput ==2:
+            manualf = input('Enter first  name of employee: ')
+            manuall = input('Enter last name of employee: ')
+            print()
+            fnamelst.append(manualf)
+            lnamelst.append(manuall)
+            print('Manual Employee Registered!')
+            print('')
+        if promptinput ==3:
+            for a in range(len(fnamelst)):
+                aa = fnamelst[a] + '.' + lnamelst[a]
+                usern.append(aa)
+            print('Each username has been generated!')
+            print('')
+        if promptinput ==4:
+            for b in range(len(fnamelst)):
+                bb =  str(random.randint(100,999)) + fnamelst[b] + lnamelst[b] + str(random.randint(100,999)) +  '!'
+                passw.append(bb)
+            print('Each password has been generated!')
+            print('')
+        if promptinput ==5:
+            up = dict(zip(usern,passw))
+            acc = pd.DataFrame(list(up.items()),columns = ['Username','Password'])
+            print(acc)
+            print()
+        if promptinput ==6:
+            while True:
+                try:
+                    dele = int(input('Enter the index number associated with the name you would like to delete: '))
+                    acc = acc.drop([acc.index[int(dele)],acc.index[int(dele)]])
+                    acc
+                    print()
+                    break
+                    if dele > len(fnamelst):
+                        print('Invalid response... Please check your inputs')
+                except ValueError:
+                    print('Invalid response... Please check your inputs')
+                except IndexError:
+                    print('Invalid response... Please keep inputs in boundaries')
+        if promptinput ==7:
+            print('File Successfully Exported!')
+            print()
+            
+            ### INPUT DESIRED LOCATION FOR FILE BELOW
+            
+            acc.to_csv('C:\\Users\\JK\\Desktop\\EmployeeAccountInfo.csv', index = False)
+            ### example('C:\\Users\\name\\location\\nameoffile.csv',index = False)
+            ### INPUT DESIRED LOCATION FOR FILE ABOVE
+            
+            ### FOR APPLE COMPUTER USE BELOW
+            # acc.to_csv('/Users/socce/Desktop/EmployeeAccountInfo.csv',index = False)
+            ###############users#compname#location#filename###########################
+            ###Remove the # from the apple pathway and add # to windows pathway if on a MAC computer ###
+        if promptinput ==8:
+            break
+        if promptinput ==0:
+            print('Invalid response... Pleanse enter a number 1-8')
+            print()
+        if promptinput > 8:
+            print('Invalid response... Please enter a number 1-8')
+            print()
+    except ValueError:
+        print('Invalid response... Please check your inputs')
+            
+        
+
+                    
